@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sorcar Academy Mystery</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:5rem;
+letter-spacing:3px;
+color:#ff4444;
+text-shadow:0 0 25px crimson;
+}
+
+.hero p{
+margin-top:20px;
+font-size:1.3rem;
+max-width:800px;
+opacity:0.9;
+}
+
+.scroll{
+margin-top:40px;
+font-size:0.9rem;
+animation:float 2s infinite;
+}
+
+section{
+min-height:100vh;
+padding:100px 10%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+section h2{
+font-size:3rem;
+color:#ff4444;
+margin-bottom:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(8px);
+padding:30px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,0.1);
+margin-top:20px;
+}
+
+.timeline{
+display:grid;
+gap:20px;
+margin-top:30px;
+}
+
+.case{
+background:#111;
+padding:20px;
+border-left:4px solid crimson;
+}
+
+.footer{
+height:60vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:2rem;
+text-align:center;
+padding:20px;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="hero">
+<h1>S. SORCAR</h1>
+<p>
+A celebrated teacher. A master magician.
+A respected founder of Sorcar Academy.
+
+But beneath the illusion lies a terrifying secret...
+</p>
+
+<div class="scroll">
+▼ SCROLL TO INVESTIGATE ▼
+</div>
+</div>
+
+<section>
+<h2>The Teacher Everyone Trusted</h2>
+
+<div class="card">
+<p>
+For years, S. Sorcar taught children the art of wonder.
+His academy became famous across the country.
+
+Yet every few months, a child vanished without explanation.
+
+No evidence.
+No witnesses.
+No answers.
+</p>
+</div>
+</section>
+
+<section>
+<h2>The Missing Children Files</h2>
+
+<div class="timeline">
+
+<div class="case">
+Case #01 – Last seen entering the magic theatre.
+</div>
+
+<div class="case">
+Case #02 – Reported hearing whispers behind the stage.
+</div>
+
+<div class="case">
+Case #03 – Security footage ended abruptly.
+</div>
+
+<div class="case">
+Case #04 – A hidden symbol found in an abandoned classroom.
+</div>
+
+</div>
+</section>
+
+<section>
+<h2>The Forbidden Basement</h2>
+
+<div class="card">
+<p>
+Investigators discovered a sealed staircase beneath the academy.
+
+Ancient symbols covered the walls.
+
+A mysterious portal glowed in the darkness.
+
+The truth about Sorcar's powers was finally revealed...
+</p>
+</div>
+</section>
+
+<section>
+<h2>The Final Revelation</h2>
+
+<div class="card">
+<p>
+The academy was never a school.
+
+It was a gateway.
+
+For decades, Sorcar used powerful illusions to hide his crimes.
+
+The missing children were trapped inside a magical dimension hidden beneath reality.
+</p>
+</div>
+</section>
+
+<div class="footer">
+The Illusion Ends Here.
+</div>
+
+<script type="module">
+
+import * as THREE from
+'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+canvas:document.getElementById("bg"),
+antialias:true
+});
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+camera.position.z = 30;
+
+const starsGeometry = new THREE.BufferGeometry();
+
+const starCount = 5000;
+
+const positions = [];
+
+for(let i=0;i<starCount;i++){
+positions.push(
+(Math.random()-0.5)*200,
+(Math.random()-0.5)*200,
+(Math.random()-0.5)*200
+);
+}
+
+starsGeometry.setAttribute(
+'position',
+new THREE.Float32BufferAttribute(
+positions,
+3
+)
+);
+
+const starsMaterial = new THREE.PointsMaterial({
+size:0.2
+});
+
+const stars = new THREE.Points(
+starsGeometry,
+starsMaterial
+);
+
+scene.add(stars);
+
+const sphereGeometry =
+new THREE.SphereGeometry(5,64,64);
+
+const sphereMaterial =
+new THREE.MeshStandardMaterial({
+color:0xaa0000,
+emissive:0x550000,
+wireframe:true
+});
+
+const portal =
+new THREE.Mesh(
+sphereGeometry,
+sphereMaterial
+);
+
+scene.add(portal);
+
+const light =
+new THREE.PointLight(
+0xff0000,
+5,
+100
+);
+
+light.position.set(
+0,
+0,
+20
+);
+
+scene.add(light);
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+stars.rotation.y += 0.0005;
+stars.rotation.x += 0.0002;
+
+portal.rotation.x += 0.005;
+portal.rotation.y += 0.005;
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+window.addEventListener(
+'resize',
+()=>{
+camera.aspect=
+window.innerWidth/
+window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+}
+);
+
+</script>
+
+</body>
+</html>
